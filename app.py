@@ -2,6 +2,7 @@ import pickle
 import streamlit as st
 import requests
 import os
+import gdown
 
 
 def fetch_poster_omdb(movie_title):
@@ -23,13 +24,11 @@ def fetch_poster_omdb(movie_title):
 @st.cache_resource
 def load_pickle_from_gdrive(file_id, filename):
     """
-    Download and load pickle file from Google Drive.
+    Download and load pickle file from Google Drive safely.
     """
     url = f"https://drive.google.com/uc?id={file_id}"
     if not os.path.exists(filename):
-        response = requests.get(url)
-        with open(filename, "wb") as f:
-            f.write(response.content)
+        gdown.download(url, filename, quiet=False)
     with open(filename, "rb") as f:
         return pickle.load(f)
 
