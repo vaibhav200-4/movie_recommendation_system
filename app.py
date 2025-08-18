@@ -21,15 +21,26 @@ def fetch_poster_omdb(movie_title):
         return None
 
 
+import zipfile
+
+
 @st.cache_resource
-def load_pickle_from_gdrive(file_id, filename):
+def load_pickle_from_gdrive(file_id, zip_filename, pickle_filename):
     """
-    Download and load pickle file from Google Drive safely.
+    Download ZIP from Google Drive, extract pickle, and load it.
     """
     url = f"https://drive.google.com/uc?id={file_id}"
-    if not os.path.exists(filename):
-        gdown.download(url, filename, quiet=False)
-    with open(filename, "rb") as f:
+
+    # download only if not already there
+    if not os.path.exists(zip_filename):
+        gdown.download(url, zip_filename, quiet=False, fuzzy=True)
+
+    # extract pickle file
+    with zipfile.ZipFile(zip_filename, "r") as zip_ref:
+        zip_ref.extract(pickle_filename)
+
+    # load pickle
+    with open(pickle_filename, "rb") as f:
         return pickle.load(f)
 
 
@@ -49,12 +60,13 @@ def recommend(movie):
 # ---------------- Streamlit App ----------------
 st.header('🎬 Movie Recommender System')
 
-# Replace these with your actual Google Drive file IDs
-MOVIE_LIST_FILE_ID = "1k-34RBAFewoIEQmrkXHg-pyrtdn8JW-J"
-SIMILARITY_FILE_ID = "1yt_0AJyHWeJbIPftisSUTDC54EVGSxJR"
+# Google Drive file IDs for the ZIPs
+MOVIE_LIST_ZIP_ID = "1U9H2m49OrT4k6verEwrlv1UulfSeHUi3"
+SIMILARITY_ZIP_ID = "1FwRIsgfseLP7teZ_7c1TBVUd750-_-TK"
 
-movies = load_pickle_from_gdrive(MOVIE_LIST_FILE_ID, "movie_list.pkl")
-similarity = load_pickle_from_gdrive(SIMILARITY_FILE_ID, "similarity.pkl")
+movies = load_pickle_from_gdrive(MOVIE_LIST_ZIP_ID, "movie_list.zip", "movie_list.pkl")
+similarity = load_pickle_from_gdrive(SIMILARITY_ZIP_ID, "similarity.zip", "similarity.pkl")
+
 
 movie_list = movies['title'].values
 selected_movie = st.selectbox("Type or select a movie:", movie_list)
