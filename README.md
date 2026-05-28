@@ -1,7 +1,7 @@
 # 🎬 Movie Recommendation System  
 
 A **content-based movie recommender system** built with **Streamlit**.  
-It suggests similar movies based on your selection and fetches posters via the **OMDb API**.  
+It suggests similar movies based on your selection and fetches posters via the **IMDb API**.  
 
 🚀 **[Live Demo](https://movierecommendationsystem-dvxtobdoayoe3xtfhf8appq.streamlit.app/)**  
 
@@ -10,7 +10,7 @@ It suggests similar movies based on your selection and fetches posters via the *
 ## ✨ Features  
 - Interactive web app built with [Streamlit](https://streamlit.io).  
 - Recommends **top 5 similar movies** based on a given title.  
-- Fetches movie posters dynamically from the **OMDb API**.  
+- Fetches movie posters dynamically from the **IMDb API**.  
 - Model artifacts (`movie_list.pkl` and `similarity.pkl`) are stored on **Google Drive** and loaded at runtime.  
 
 ---
@@ -21,7 +21,7 @@ It suggests similar movies based on your selection and fetches posters via the *
 - **pandas** (data handling)  
 - **pickle** (loading trained data)  
 - **gdown** (Google Drive integration)  
-- **OMDb API** (poster fetching)  
+- **IMDb API** (poster fetching)  
 
 ---
 
@@ -37,7 +37,7 @@ It suggests similar movies based on your selection and fetches posters via the *
 ## ⚡ How It Works  
 1. User selects a movie from the dropdown.  
 2. The app finds the most similar movies using a **cosine similarity matrix**.  
-3. For each recommended movie, a poster is fetched via OMDb API.  
+3. For each recommended movie, a poster is fetched via IMDb API.  
 4. Results are displayed in a clean grid layout.  
 
 ---
