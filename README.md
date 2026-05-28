@@ -61,7 +61,7 @@ streamlit run app.py
 
 🙌 Acknowledgments
 
-OMDb API
+IMDb API
  for poster data.
 
 Streamlit
